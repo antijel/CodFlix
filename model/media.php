@@ -92,16 +92,26 @@ class Media {
 
     // Open database connection
     $db   = init_db();
+    
+    if(isset($_GET['title'])){
 
-  //$req  = $db->prepare( "SELECT * FROM media WHERE title = ? ORDER BY release_date DESC" );
-    $req  = $db->prepare( "SELECT * FROM media ORDER BY release_date DESC" );
-    $req->execute( array( '%' . $title . '%' ));
+      $req  = $db->prepare( "SELECT * FROM media WHERE title LIKE '%{$title}%' " );
+      $req->execute( array( '%' . $title . '%' ));
+      echo('TITLE');
+
+    }else{
+
+      //$req  = $db->prepare( "SELECT * FROM media WHERE title = ? ORDER BY release_date DESC" );
+      $req  = $db->prepare( "SELECT * FROM media ORDER BY release_date DESC" );
+      $req->execute( array( '%' . $title . '%' ));
+      echo('NORMAL');
+
+    }
 
     // Close databse connection
     $db   = null;
 
     return $req->fetchAll();
-
   }
 
   public static function detailMedias( $id ) {
