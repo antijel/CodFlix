@@ -22,3 +22,14 @@ function signupPage() {
 /***************************
 * ----- SIGNUP FUNCTION -----
 ***************************/
+
+function verificationSignUpForm($post ) {
+
+  $data = new stdClass();
+  $data->email = $post['email'];
+  $data->password = $post['password'];
+  $data->password_confirm = $post['password_confirm'];
+
+  $user           = new User( $data );
+  $userData       = $user-> createUser();
+}

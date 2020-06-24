@@ -25,7 +25,10 @@ if ( isset( $_GET['action'] ) ):
     break;
 
     case 'signup':
-
+      
+      if (isset($_POST['email']) && isset($_POST['password']) && isset($_POST['password_confirm']) ){
+        verificationSignUpForm($_POST);
+      }
       signupPage();
 
     break;
