@@ -88,6 +88,7 @@ class Media {
   * -------- GET LIST --------
   ***************************/
 
+  // Get filterd media
   public static function filterMedias( $title ) {
 
     // Open database connection
@@ -97,14 +98,11 @@ class Media {
 
       $req  = $db->prepare( "SELECT * FROM media WHERE title LIKE '%{$title}%' " );
       $req->execute( array( '%' . $title . '%' ));
-      echo('TITLE');
 
     }else{
 
-      //$req  = $db->prepare( "SELECT * FROM media WHERE title = ? ORDER BY release_date DESC" );
       $req  = $db->prepare( "SELECT * FROM media ORDER BY release_date DESC" );
       $req->execute( array( '%' . $title . '%' ));
-      echo('NORMAL');
 
     }
 
@@ -114,18 +112,62 @@ class Media {
     return $req->fetchAll();
   }
 
+  // Get details for media
   public static function detailMedias( $id ) {
 
-    // Open database connection
     $db   = init_db();
 
     $req  = $db->prepare( "SELECT * FROM media WHERE id = \" ".$id." \" " );
     $req->execute( array( '%' . $id . '%') );
     
-    // Close databse connection
     $db   = null;
 
     return $req->fetchAll();
+  }
+
+  // Get details for episode
+  public static function detailEpisode( $id ) {
+
+    $db   = init_db();
+
+    $req  = $db->prepare( "SELECT * FROM episode WHERE id = \" ".$id." \" " );
+    $req->execute( array( '%' . $id . '%') );
+    
+    $db   = null;
+
+    return $req->fetchAll();
+  }
+
+  //Get episode informations
+  public static function getEpisodes( $id , $season_id ) {
+
+    $db   = init_db();
+
+    if($season_id !== null){ // If user selected a season
+      $req  = $db->prepare( "SELECT * FROM episode WHERE media_id = ".$id." AND season = ".$season_id );
+      $req->execute( array( '%' . $id . '%') );
+    }else{                    // If not
+      $req  = $db->prepare( "SELECT * FROM episode WHERE media_id = ".$id );
+      $req->execute( array( '%' . $id . '%') );
+    }
+
+    $db   = null;
+
+    return $req->fetchAll();
+  }
+
+  //Get number of season for series id
+  public static function getNbSeason( $id ) {
+
+    $db   = init_db();
+  
+    $req  = $db->prepare( "SELECT COUNT(DISTINCT season) FROM episode WHERE media_id = ".$id );
+    $req->execute( array( '%' . $id . '%') );
+
+    $db   = null;
+
+    return $req->fetchAll();
+  
   }
 
 }
