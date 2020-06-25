@@ -11,6 +11,8 @@ function detail() {
     $user_id = isset( $_SESSION['user_id'] ) ? $_SESSION['user_id'] : false;
 
     $detail = Media::detailMedias($id);
+
+    //Add media to history table
     User::addHistory($id,$user_id);
 
     //IF user selected an episode

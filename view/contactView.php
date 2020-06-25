@@ -1,10 +1,10 @@
 <?php ob_start(); ?>
 
 <div>
-<p>Page Contact </p>
+<h1> Contact </h1>
 </div>
 
-<a href = 'mailto:contact@codflix.com'><P>Contactez-nous!</P></a>
+<a href = 'mailto:contact@codflix.com'><P>Cliquez ici pour nous envoyer un mail</P></a>
 
 <?php   
 $content = ob_get_clean(); 

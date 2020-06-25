@@ -1,5 +1,6 @@
 <?php ob_start(); ?>
 
+<!-- MEDIA LIST-->
 <div class="media-list">
     <?php foreach( $history as $media ):?>
         <a class="item" href="index.php?media=<?= $media['media_id'] ?>">
@@ -10,7 +11,7 @@
                 </div>
             </div>
             <div class="title"><?= $media['title']; ?></div>
-            <a href="index.php?action=history&supp=<?= $media[0]; ?>">Supprimer</a>
+            <a class='title'  href="index.php?action=history&supp=<?= $media[0]; ?>">Supprimer</a>
         </a>
         
     <?php endforeach; ?>

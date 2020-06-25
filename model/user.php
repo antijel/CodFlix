@@ -181,7 +181,7 @@ class User {
 
       }else{
 
-        $req  = $db->prepare( "DELETE FROM `history` WHERE id = ".$id_histo );
+        $req  = $db->prepare( "DELETE FROM `history` WHERE id = ".$id_histo." AND user_id = ".$user->id );
         $req->execute( array( '%' . $id_histo . '%') );
 
       }
@@ -249,7 +249,7 @@ class User {
         $req->execute();
         $req  = $db->prepare("DELETE FROM history WHERE user_id = $user->id ");
         $req->execute();
-        $reponse = 'Compte utilisateur supprimé';
+        $reponse = 'OK';
         session_destroy();
       }else{
         $reponse = 'Ancien mot de passe incorrect';

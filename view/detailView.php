@@ -15,17 +15,26 @@
 
     <!-- INFORMATIONS EPISODE-->
 <?php if(isset($detailEpisode)){ ?>
-    <p><?php echo($detailEpisode[0]['title'])?></p>
+<div>  
+    <div>
+    <iframe allowfullscreen="true" frameborder="0"
+            src="<?= $detailEpisode[0]['media_url']; ?>" ></iframe>
+    </div>
+    <h1><?php echo($detailEpisode[0]['title'])?></h1>
     <p><?php echo("Saison : " .$detailEpisode[0]['season'])?></p>
     <p><?php echo("Episode : " .$detailEpisode[0]['episode'])?></p>
     <p><?php echo($detailEpisode[0]['release_date'])?></p>
     <p><?php echo($detailEpisode[0]['summary'])?></p> 
-
+</div>
 <?php }else{ ?>
 
     <!--INFORMATIONS MEDIA  -->
 <div>  
-    <p><?php echo($detail[0]['title'])?></p>
+    <div>
+    <iframe allowfullscreen="true" frameborder="0"
+            src="<?= $detail[0]['trailer_url']; ?>" ></iframe>
+    </div>
+    <h1><?php echo($detail[0]['title'])?></h1>
     <p><?php echo($detail[0]['type'])?></p>
     <p><?php echo($detail[0]['status'])?></p>
     <p><?php echo($detail[0]['release_date'])?></p>
