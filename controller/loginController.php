@@ -29,7 +29,7 @@ function login( $post ) {
 
   $data           = new stdClass();
   $data->email    = $post['email'];
-  $data->password = $post['password'];
+  $data->password = crypt($post['password'],'SHA-256');
 
   $user           = new User( $data );
   $userData       = $user->getUserByEmail();

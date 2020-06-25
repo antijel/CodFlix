@@ -9,7 +9,7 @@ function history() {
     $supp_id = isset( $_GET['supp'] ) ? $_GET['supp'] : null;
 
     if($supp_id !== null){      
-        var_dump(User::suppMediaFromHistory($supp_id));
+        User::suppMediaFromHistory($supp_id);
     }
 
     $history = User::getHistory($user->id);  

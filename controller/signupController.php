@@ -27,8 +27,8 @@ function verificationSignUpForm($post ) {
 
   $data = new stdClass();
   $data->email = $post['email'];
-  $data->password = $post['password'];
-  $data->password_confirm = $post['password_confirm'];
+  $data->password = crypt($post['password'],'SHA-2256');
+  $data->password_confirm = crypt($post['password_confirm'],'SHA-2256');
 
   $user           = new User( $data );
   $userData       = $user-> createUser();
