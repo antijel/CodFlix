@@ -6,6 +6,7 @@ require_once( 'controller/signupController.php' );
 require_once( 'controller/mediaController.php' );
 require_once( 'controller/contactController.php' );
 require_once( 'controller/detailController.php' );
+require_once( 'controller/historyController.php' );
 
 
 
@@ -25,7 +26,7 @@ if ( isset( $_GET['action'] ) ):
     break;
 
     case 'signup':
-      
+
       if (isset($_POST['email']) && isset($_POST['password']) && isset($_POST['password_confirm']) ){
         verificationSignUpForm($_POST);
       }
@@ -36,6 +37,12 @@ if ( isset( $_GET['action'] ) ):
     case 'logout':
 
       logout();
+
+    break;
+
+    case 'history':
+
+      history();
 
     break;
 

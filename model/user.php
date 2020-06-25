@@ -125,4 +125,74 @@ class User {
     return $req->fetch();
   }
 
+    //Add media to history of user
+    public static function addHistory( $id, $user_id ) {
+
+      $db   = init_db();
+  
+      $req  = $db->prepare( "SELECT * FROM history WHERE media_id = ".$id." AND user_id = ".$user_id );
+      $req->execute();
+  
+      if($req->fetchAll() == null){// IF media is NOT in history of user
+  
+        $req  = $db->prepare( "INSERT INTO `history`(`user_id`, `media_id`, `start_date`) VALUES (".$user_id.",".$id.",'".date('Y-m-d')."')" );
+        $req->execute();
+  
+      }else{  // IF media is in history of user
+  
+        $req  = $db->prepare( "UPDATE `history` SET `start_date`= ".date('Y-m-d')." WHERE `id` = ".$id." AND `user_id` = ".$user_id );
+        $req->execute();
+  
+      }
+  
+    
+      $db   = null;
+    
+      return $req->fetchAll();
+      
+    }
+  
+    //Get history of user_id
+    public static function getHistory( $user_id ) {
+  
+      $db   = init_db();
+    
+      $req  = $db->prepare( "SELECT * FROM `history`, `media` WHERE history.media_id = media.id AND user_id = ".$user_id );
+      $req->execute( array( '%' . $user_id . '%') );
+  
+      $db   = null;
+  
+      return $req->fetchAll();
+    
+    }
+
+    //Get history of user_id
+    public static function suppMediaFromHistory( $id_histo ) {
+
+      $user     = new stdClass();
+      $user->id = isset( $_SESSION['user_id'] ) ? $_SESSION['user_id'] : false;
+  
+      $db   = init_db();
+
+      if($id_histo == 0){
+
+        $req  = $db->prepare( "DELETE FROM `history` WHERE user_id = ".$user->id );
+        $req->execute( array( '%' . $id_histo . '%') );
+
+      }else{
+
+        $req  = $db->prepare( "DELETE FROM `history` WHERE id = ".$id_histo );
+        $req->execute( array( '%' . $id_histo . '%') );
+
+      }
+      
+      
+      $db   = null;
+      
+      return $req->fetchAll();
+        
+    }
+    
 }
+
+
