@@ -7,6 +7,7 @@ require_once( 'controller/mediaController.php' );
 require_once( 'controller/contactController.php' );
 require_once( 'controller/detailController.php' );
 require_once( 'controller/historyController.php' );
+require_once( 'controller/profilController.php' );
 
 
 
@@ -49,6 +50,12 @@ if ( isset( $_GET['action'] ) ):
     case 'contact':
 
       contact();
+
+    break;
+
+    case 'profil':
+
+      profil();
 
     break;
 

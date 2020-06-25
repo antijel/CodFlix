@@ -186,11 +186,80 @@ class User {
 
       }
       
-      
       $db   = null;
       
       return $req->fetchAll();
         
+    }
+
+    //Get history of user_id
+    public static function changeUserLogin( $mail , $password, $old_password) {
+
+      $user     = new stdClass();
+      $user->id = isset( $_SESSION['user_id'] ) ? $_SESSION['user_id'] : false;
+      
+      $db   = init_db();
+
+      $req  = $db->prepare("SELECT password FROM user WHERE id = $user->id");
+      $req->execute();
+      $current_password = $req->fetch();
+      
+
+      if($mail !== null){
+    
+        $req  = $db->prepare("UPDATE user SET email = '$mail' WHERE id = $user->id ");
+        $req->execute();
+
+        $reponse = 'Mail modifié';
+      }
+      
+
+      if($password !== null ){
+        if($old_password == $current_password[0]){
+          $reponse = 'Mot de passe modifié';
+          $cryptedPassword = crypt($password,'SHA-256');
+      
+          $req  = $db->prepare( "UPDATE user SET password = '$cryptedPassword' WHERE id = $user->id");
+          $req->execute();
+        }else{
+          $reponse = 'Ancien mot de passe incorrect';
+        }
+
+
+      }         
+          
+      $db   = null;
+          
+      return $reponse;
+            
+    }
+
+    public static function deleteUser( $password, $old_password) {
+      $user     = new stdClass();
+      $user->id = isset( $_SESSION['user_id'] ) ? $_SESSION['user_id'] : false;
+
+      $db   = init_db();
+
+      $req  = $db->prepare("SELECT password FROM user WHERE id = $user->id");
+      $req->execute();
+      $current_password = $req->fetch();
+
+      if($old_password == $current_password[0]){
+        $req  = $db->prepare("DELETE FROM user WHERE id = $user->id ");
+        $req->execute();
+        $req  = $db->prepare("DELETE FROM history WHERE user_id = $user->id ");
+        $req->execute();
+        $reponse = 'Compte utilisateur supprimé';
+        session_destroy();
+      }else{
+        $reponse = 'Ancien mot de passe incorrect';
+      }
+
+      $db   = null;
+
+      
+
+      return $reponse;
     }
     
 }
